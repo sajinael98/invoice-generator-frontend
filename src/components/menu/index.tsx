@@ -2,11 +2,12 @@
 
 import { useLogout, useMenu } from "@refinedev/core";
 import Link from "next/link";
+import { signOut } from "next-auth/react"
 
 export const Menu = () => {
   const { mutate: logout } = useLogout();
   const { menuItems, selectedKey } = useMenu();
-
+  
   return (
     <nav className="menu">
       <ul>

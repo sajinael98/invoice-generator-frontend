@@ -1,23 +1,33 @@
-import { AuthPage } from "@components/auth-page";
+"use client"
 import { authProviderServer } from "@providers/auth-provider";
 import { redirect } from "next/navigation";
+import { AuthPage } from "@refinedev/mantine";
+import { useLogin } from "@refinedev/core";
 
-export default async function Login() {
-  const data = await getData();
+export default function Login() {
+  // const data = await getData();
+  const { mutate } = useLogin()
 
-  if (data.authenticated) {
-    redirect(data?.redirectTo || "/");
-  }
 
-  return <AuthPage type="login" />;
+  return <AuthPage
+    type="login"
+    formProps={{
+      initialValues: {
+        email: 'admin@gmail.com',
+        password: 'password'
+      },
+      onSubmit(values) {
+        mutate(values)
+      },
+    }} />;
 }
 
-async function getData() {
-  const { authenticated, redirectTo, error } = await authProviderServer.check();
+// async function getData() {
+//   const { authenticated, redirectTo, error } = await authProviderServer.check();
 
-  return {
-    authenticated,
-    redirectTo,
-    error,
-  };
-}
+//   return {
+//     authenticated,
+//     redirectTo,
+//     error,
+//   };
+// }

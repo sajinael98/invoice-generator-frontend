@@ -1,5 +1,5 @@
 import { DevtoolsProvider } from "@providers/devtools";
-import { GitHubBanner, Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import routerProvider from "@refinedev/nextjs-router";
 import { Metadata } from "next";
@@ -7,6 +7,7 @@ import React, { Suspense } from "react";
 
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
+import UiProvider from "@providers/mantine-provider/UiProvider";
 import "@styles/global.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,6 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Suspense>
-          <GitHubBanner />
-          <RefineKbarProvider>
-            <DevtoolsProvider>
+        <UiProvider>
+          <Suspense>
+            <RefineKbarProvider>
+              {/* <DevtoolsProvider> */}
               <Refine
                 routerProvider={routerProvider}
                 dataProvider={dataProvider}
@@ -65,9 +65,10 @@ export default function RootLayout({
                 {children}
                 <RefineKbar />
               </Refine>
-            </DevtoolsProvider>
-          </RefineKbarProvider>
-        </Suspense>
+              {/* </DevtoolsProvider> */}
+            </RefineKbarProvider>
+          </Suspense>
+        </UiProvider>
       </body>
     </html>
   );
