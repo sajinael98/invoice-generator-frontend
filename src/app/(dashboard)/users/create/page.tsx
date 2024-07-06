@@ -9,9 +9,9 @@ import { Create } from "@refinedev/mantine";
 const CreateUserPage = () => {
   const { saveButtonProps, register, formState: { errors } } = useCreateUserForm()
  
-  //role field
-  const { onChange, ...roleProps } = register("role")
-console.log(errors)
+   //role field
+   const { onChange: onRoleChange, ...roleProps } = register("role")
+
   return (
     <CanAccess resource="users" action="create" fallback={<div>fuck you</div>}>
       <Create title="New User" saveButtonProps={saveButtonProps} contentProps={{ px: 'xl' }}>
@@ -37,20 +37,15 @@ console.log(errors)
               label="Role"
               placeholder="Pick one"
               {...roleProps}
-              onSelect={onChange}
+              onSelect={onRoleChange}
               error={errors['role']?.message as string}
-              data={[
-                { label: "User", value: IRole.USER.toString() },
-                { label: "Admin", value: IRole.ADMIN.toString() },
-                { label: "Manager", value: IRole.Manager.toString() },
-              ]}
+              data={Object.values(IRole)}
             />
           </div>
           <div>
             <TextInput label='Password' error={errors['password']?.message as string} {...register("password")} />
           </div>
         </SimpleGrid>
-
       </Create>
     </CanAccess>
   )

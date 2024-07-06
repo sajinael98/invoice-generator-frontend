@@ -1,14 +1,12 @@
 "use client"
-import { Box, Group, Pagination, Select, Table } from "@mantine/core";
-import { EmailField, List } from '@refinedev/mantine';
-import { EditButton, DeleteButton } from "@refinedev/mantine";
 
-import { ColumnDef, flexRender } from "@tanstack/react-table";
-
-import { useMemo } from "react";
-import { useTable } from "@refinedev/react-table";
 import { ColumnFilter, ColumnSorter } from "@components/Table";
+import { Box, Group, Pagination, Table } from "@mantine/core";
 import { IUser } from "@modules/users/types";
+import { DeleteButton, EditButton, EmailField, List } from '@refinedev/mantine';
+import { useTable } from "@refinedev/react-table";
+import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { useMemo } from "react";
 
 const page = () => {
     const columns = useMemo<ColumnDef<IUser>[]>(() => [
@@ -16,7 +14,7 @@ const page = () => {
             id: 'id',
             header: 'ID',
             accessorKey: 'id',
-            maxSize:50
+            maxSize: 50
             // meta: {
             //     filterElement: function render(props: any) {
             //         return (
@@ -34,7 +32,7 @@ const page = () => {
             //     filterOperator: "eq",
             // },
 
-            
+
         },
         {
             id: 'name',
@@ -49,6 +47,11 @@ const page = () => {
             cell: function render({ getValue }) {
                 return <EmailField value={getValue() as string} />
             }
+        },
+        {
+            id: 'role',
+            header: 'Role',
+            accessorKey: 'role'
         },
         {
             id: "actions",

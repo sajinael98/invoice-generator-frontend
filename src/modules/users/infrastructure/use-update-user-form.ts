@@ -7,8 +7,12 @@ export function useUpdateUserForm() {
     const form = useForm<IUpdateUserRequest>({
         resolver: zodResolver(updateUserSchema),
         refineCoreProps: {
+            onMutationError(error, variables, context, isAutoSave) {
+                
+            },
             errorNotification(error, _values, _resource) {
                 const err = error?.response?.data
+                console.log(">>>")
                 if (typeof err === "object") {
                     Object.keys(err).forEach(fieldError => {
                         form.setError(fieldError, { message: err[fieldError] })

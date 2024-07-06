@@ -5,6 +5,7 @@ import SessionProvider from "@providers/session-provider";
 import UiProvider from "@providers/ui-provider";
 import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { useNotificationProvider } from "@refinedev/mantine";
 
 import routerProvider from "@refinedev/nextjs-router";
 import { Metadata } from "next";
@@ -31,6 +32,7 @@ export default function RootLayout({
               <RefineKbarProvider>
                 {/* <DevtoolsProvider> */}
                 <Refine
+                  notificationProvider={useNotificationProvider}
                   routerProvider={routerProvider}
                   dataProvider={dataProvider}
                   authProvider={authProvider}

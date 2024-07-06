@@ -2,19 +2,31 @@
 
 import { Select, SimpleGrid, TextInput } from "@mantine/core";
 import { useUpdateUserForm } from "@modules/users/infrastructure";
-import { IRole } from '@modules/users/types';
+import { IRole } from "@modules/users/types";
 import { CanAccess } from '@refinedev/core';
-import { Edit } from '@refinedev/mantine';
+import { Edit, } from '@refinedev/mantine';
+import { useEffect } from "react";
 
 const EditUserPage = () => {
-    const { register, formState: { errors }, saveButtonProps } = useUpdateUserForm()
-    
-    //role field
-    const { onChange, ...roleProps } = register("role")
+    const { register, formState: { errors }, saveButtonProps, refineCore: { redirect, queryResult } } = useUpdateUserForm()
 
+    useEffect(() => {
+        if (queryResult?.isError) {
+            redirect('list')
+        }
+    }, [queryResult])
+
+    useEffect(() => {
+        register('id')
+    }, [])
+
+    //role field
+    const { onChange: onRoleChange, ...roleProps } = register("role")
+    
     return (
         <CanAccess resource='users' action='edit'>
-            <Edit saveButtonProps={saveButtonProps} >
+            <Edit saveButtonProps={saveButtonProps} headerButtonProps={{ display: 'none' }}>
+
                 <SimpleGrid
                     cols={4}
                     spacing="lg"
@@ -46,14 +58,9 @@ const EditUserPage = () => {
                     <div>
                         <Select
                             label="Role"
-                            placeholder="Pick one"
                             {...roleProps}
-                            onSelect={onChange}
-                            data={[
-                                { label: "User", value: IRole.USER.toString() },
-                                { label: "Admin", value: IRole.ADMIN.toString() },
-                                { label: "Manager", value: IRole.Manager.toString() },
-                            ]}
+                            onSelect={(e) => onRoleChange(e)}
+                            data={Object.values(IRole)}
                         />
                     </div>
                 </SimpleGrid>
