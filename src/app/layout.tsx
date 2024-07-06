@@ -1,14 +1,14 @@
-import { DevtoolsProvider } from "@providers/devtools";
+import { accessControlPorvider } from "@providers/access-control-provider";
+import { authProvider } from "@providers/auth-provider";
+import { provider as dataProvider } from "@providers/data-provider";
+import SessionProvider from "@providers/session-provider";
+import UiProvider from "@providers/ui-provider";
 import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+
 import routerProvider from "@refinedev/nextjs-router";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
-
-import { authProvider } from "@providers/auth-provider";
-import { dataProvider } from "@providers/data-provider";
-import UiProvider from "@providers/mantine-provider/UiProvider";
-import "@styles/global.css";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -25,51 +25,43 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UiProvider>
-          <Suspense>
-            <RefineKbarProvider>
-              {/* <DevtoolsProvider> */}
-              <Refine
-                routerProvider={routerProvider}
-                dataProvider={dataProvider}
-                authProvider={authProvider}
-                resources={[
-                  {
-                    name: "blog_posts",
-                    list: "/blog-posts",
-                    create: "/blog-posts/create",
-                    edit: "/blog-posts/edit/:id",
-                    show: "/blog-posts/show/:id",
-                    meta: {
-                      canDelete: true,
+        <SessionProvider>
+          <UiProvider>
+            <Suspense>
+              <RefineKbarProvider>
+                {/* <DevtoolsProvider> */}
+                <Refine
+                  routerProvider={routerProvider}
+                  dataProvider={dataProvider}
+                  authProvider={authProvider}
+                  accessControlProvider={accessControlPorvider}
+                  resources={[
+                    {
+                      name: "users",
+                      list: "/users",
+                      create: "/users/create",
+                      edit: "/users/edit/:id",
+                      meta: {
+                        canDelete: true
+                      }
                     },
-                  },
-                  {
-                    name: "categories",
-                    list: "/categories",
-                    create: "/categories/create",
-                    edit: "/categories/edit/:id",
-                    show: "/categories/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
-                  },
-                ]}
-                options={{
-                  syncWithLocation: true,
-                  warnWhenUnsavedChanges: true,
-                  useNewQueryKeys: true,
-                  projectId: "SMJUok-UvWd6Q-1HkzYq",
-                }}
-              >
-                {children}
-                <RefineKbar />
-              </Refine>
-              {/* </DevtoolsProvider> */}
-            </RefineKbarProvider>
-          </Suspense>
-        </UiProvider>
+                  ]}
+                  options={{
+                    syncWithLocation: true,
+                    warnWhenUnsavedChanges: true,
+                    useNewQueryKeys: true,
+                    projectId: "SMJUok-UvWd6Q-1HkzYq",
+                  }}
+                >
+                  {children}
+                  <RefineKbar />
+                </Refine>
+                {/* </DevtoolsProvider> */}
+              </RefineKbarProvider>
+            </Suspense>
+          </UiProvider>
+        </SessionProvider>
       </body>
-    </html>
+    </html >
   );
 }

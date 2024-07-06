@@ -1,17 +1,21 @@
 "use client"
 import { MantineProvider } from '@mantine/core'
-import React, { PropsWithChildren } from 'react'
-import { SessionProvider } from 'next-auth/react'
+import { NotificationsProvider } from '@mantine/notifications'
+import { PropsWithChildren } from 'react'
 
 const UiProvider = ({ children }: PropsWithChildren) => {
     return (
         <MantineProvider
             withNormalizeCSS
             withGlobalStyles
+            theme={{
+                primaryColor:'teal',
+                colorScheme:'dark'
+            }}
         >
-            <SessionProvider >
+            <NotificationsProvider position='bottom-right'>
                 {children}
-            </SessionProvider>
+            </NotificationsProvider>
         </MantineProvider>
     )
 }

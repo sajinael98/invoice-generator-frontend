@@ -124,13 +124,13 @@ export default function BlogPostList() {
     },
   });
 
-  setOptions((prev) => ({
-    ...prev,
-    meta: {
-      ...prev.meta,
-      categoryData,
-    },
-  }));
+  // setOptions((prev) => ({
+  //   ...prev,
+  //   meta: {
+  //     ...prev.meta,
+  //     categoryData,
+  //   },
+  // }));
 
   return (
     <div style={{ padding: "16px" }}>

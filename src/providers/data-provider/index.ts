@@ -1,7 +1,46 @@
 "use client";
 
-import dataProviderSimpleRest from "@refinedev/simple-rest";
+import { DataProvider } from "@refinedev/core";
+import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
+import { getSession } from "next-auth/react";
 
-const API_URL = "https://api.fake-rest.refine.dev";
+axiosInstance.interceptors.request.use(async function (config) {
+    const session = await getSession()
+    const token = session?.user.token
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+        config.headers["Access-Control-Allow-Origin"] = "*"
+    }
 
-export const dataProvider = dataProviderSimpleRest(API_URL);
+    return config
+})
+
+const backendUrl = "/backend-api/";
+const simpleDataProvider = dataProviderSimpleRest(backendUrl, axiosInstance)
+
+const dataProvider = (apiUrl: string): DataProvider => ({
+    getApiUrl: () => apiUrl,
+    getList: ({ resource, pagination, sorters, filters, meta }) => {
+        const params = new URLSearchParams();
+        if (pagination?.current) {
+            params.append("page", pagination.current.toFixed());
+        }
+        if (pagination?.pageSize) {
+            params.append("size", pagination?.pageSize.toFixed());
+        }
+        filters?.forEach((filter, index) => {
+            console.log(index)
+            params.append(`filter[${index}][field]`, (filter as any).field)
+            params.append(`filter[${index}][operator]`, filter.operator)
+            params.append(`filter[${index}][value]`, filter.value)
+        })
+
+        return axiosInstance.get(backendUrl + resource, { params })
+    },
+    create: (args) => simpleDataProvider.create(args),
+    update: (arg) => simpleDataProvider.update(arg),
+    deleteOne: (args) => simpleDataProvider.deleteOne(args),
+    getOne: (args) => simpleDataProvider.getOne(args),
+});
+
+export const provider = dataProvider(backendUrl)

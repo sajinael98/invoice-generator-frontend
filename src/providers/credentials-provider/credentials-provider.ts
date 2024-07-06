@@ -1,5 +1,5 @@
 import { axiosInstance } from "@refinedev/simple-rest";
-import { AuthOptions, Awaitable, User } from "next-auth";
+import { Awaitable, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const provider = CredentialsProvider({
@@ -17,10 +17,13 @@ const provider = CredentialsProvider({
             email, password
         })
         const data = response.data
+        
         const user: Awaitable<User> = {
-            id: data.id,
+            id: data.userId,
             name: data.name,
-            email: data.email
+            email: data.email,
+            permissions: data.permissions,
+            token: data.token,
         }
         return user
     },

@@ -3,7 +3,7 @@ import { AuthOptions } from "next-auth";
 
 const authOptions: AuthOptions = {
     pages: {
-        signIn: '/login'
+        signIn: '/login',
     },
     session: {
         strategy: 'jwt',
@@ -17,10 +17,10 @@ const authOptions: AuthOptions = {
             return { ...token, ...user }
         },
         async session({ session, token }) {
-            session.expires = "2024-07-29T22:39:46.080Z"
-            session.user = token;
+            session.user = token as any
             return session;
         },
+
     }
 }
 

@@ -11,6 +11,7 @@ export default function BlogPostCreate() {
     register,
     handleSubmit,
     formState: { errors },
+    saveButtonProps
   } = useForm({});
 
   const { options: categoryOptions } = useSelect({

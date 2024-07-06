@@ -19,9 +19,9 @@ export const authProvider: AuthProvider = {
     if (response.ok) {
       return {
         success: true,
-        redirectTo: '/', successNotification: {
-          message: 'sadasdas',
-          description: 'sadasdasdsa'
+        redirectTo: '/',
+        successNotification:{
+          message:'Welcome'
         }
       }
     }
@@ -34,12 +34,16 @@ export const authProvider: AuthProvider = {
     return {
       success: false,
       redirectTo: "/login",
-      then: await signOut()
+      then: await signOut({ redirect: false })
     };
   },
-  check: async (p) => {
+  check: async () => {
     const session = await getSession()
-    if (session?.user) {
+
+    const expirationDate = new Date(session?.expires as string)
+    const currentDate = new Date()
+    
+    if (expirationDate > currentDate && session?.user) {
       return {
         authenticated: true
       }
@@ -51,13 +55,14 @@ export const authProvider: AuthProvider = {
     };
   },
   getPermissions: async () => {
-    throw Error("not implemented!")
+    const session = await getSession()
+    return session?.user.permissions ?? []
   },
   getIdentity: async () => {
-    throw Error("not implemented!")
+    return {}
   },
   onError: async (error) => {
-    if (error.response?.status === 401) {
+    if ([401, 403].includes(error.response?.status)) {
       return {
         logout: true,
       };
