@@ -43,10 +43,13 @@ export default function RootLayout({
                       list: "/users",
                       create: "/users/create",
                       edit: "/users/edit/:id",
-                      meta: {
-                        canDelete: true
-                      }
                     },
+                    {
+                      name: 'workers',
+                      list:'/workers',
+                      create: '/workers/create',
+                      edit: '/workers/edit/:id',
+                    }
                   ]}
                   options={{
                     syncWithLocation: true,

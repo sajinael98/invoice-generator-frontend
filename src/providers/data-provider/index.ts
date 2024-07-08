@@ -29,7 +29,6 @@ const dataProvider = (apiUrl: string): DataProvider => ({
             params.append("size", pagination?.pageSize.toFixed());
         }
         filters?.forEach((filter, index) => {
-            console.log(index)
             params.append(`filter[${index}][field]`, (filter as any).field)
             params.append(`filter[${index}][operator]`, filter.operator)
             params.append(`filter[${index}][value]`, filter.value)
