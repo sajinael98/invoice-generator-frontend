@@ -1,19 +1,17 @@
 "use client"
+
+import TableBody from "@components/Table/TableBody";
+import TableHeader from "@components/Table/TableHeader";
 import { Pagination, Table } from "@mantine/core";
 import { WorkerResponseDto } from '@modules/workers/types';
 import { DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from "@refinedev/react-table";
-import { ColumnDef, flexRender } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
 const WorkersListPage = () => {
   const columns = React.useMemo<ColumnDef<WorkerResponseDto>[]>(
     () => [
-      {
-        id: "id",
-        header: "ID",
-        accessorKey: "id",
-      },
       {
         id: 'name',
         header: "Name",
@@ -49,48 +47,14 @@ const WorkersListPage = () => {
     getRowModel,
     refineCore: { setCurrent, pageCount, current },
   } = useTable({
-    refineCoreProps: {
-      resource: "workers",
-    },
-    columns,
-    enableColumnPinning: true,
-    initialState: {
-      columnPinning: {
-        right: ['actions-column'],
-      },
-    }
+    columns
   });
-  console.log(pageCount, current)
+
   return (
     <List>
       <Table>
-        <thead>
-          {getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        <TableHeader headerGroups={getHeaderGroups} />
+        <TableBody rowModel={getRowModel} />
       </Table>
       <br />
       <Pagination

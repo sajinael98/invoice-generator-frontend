@@ -9,8 +9,18 @@ const UiProvider = ({ children }: PropsWithChildren) => {
             withNormalizeCSS
             withGlobalStyles
             theme={{
-                primaryColor:'teal',
-                colorScheme:'dark'
+                primaryColor: 'teal',
+                colorScheme: 'dark',
+                components: {
+                    Table: {
+                        defaultProps: {
+                            striped: true,
+                            highlightOnHover: true,
+                            withBorder: true,
+                            withColumnBorders: true,
+                        }
+                    }
+                }
             }}
         >
             <NotificationsProvider position='bottom-right'>

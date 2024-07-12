@@ -1,20 +1,21 @@
 "use client"
 
-import { ColumnFilter, ColumnSorter } from "@components/Table";
-import { Box, Group, Pagination, Table } from "@mantine/core";
+import TableBody from "@components/Table/TableBody";
+import TableHeader from "@components/Table/TableHeader";
+import { Box, Pagination, Table } from "@mantine/core";
 import { IUser } from "@modules/users/types";
 import { DeleteButton, EditButton, EmailField, List } from '@refinedev/mantine';
 import { useTable } from "@refinedev/react-table";
-import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 const page = () => {
     const columns = useMemo<ColumnDef<IUser>[]>(() => [
-        {
-            id: 'id',
-            header: 'ID',
-            accessorKey: 'id',
-            maxSize: 50
+        // {
+        //     id: 'id',
+        //     header: 'ID',
+        //     accessorKey: 'id',
+        //     maxSize: 50
             // meta: {
             //     filterElement: function render(props: any) {
             //         return (
@@ -33,7 +34,7 @@ const page = () => {
             // },
 
 
-        },
+        // },
         {
             id: 'name',
             header: 'Name',
@@ -79,69 +80,16 @@ const page = () => {
         getHeaderGroups,
         getRowModel,
         refineCore: { setCurrent, pageCount, current }
-
     } = useTable({
-        refineCoreProps: {
-            resource: 'users'
-        },
         columns
     })
 
     return (
         <List>
             <Box style={{ overflowX: 'auto' }}>
-
-
-                <Table striped highlightOnHover withBorder withColumnBorders>
-                    <thead>
-                        {getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <th key={header.id}>
-                                            {!header.isPlaceholder && (
-                                                <Group spacing="xs" noWrap>
-                                                    <Box>
-                                                        {flexRender(
-                                                            header.column.columnDef
-                                                                .header,
-                                                            header.getContext(),
-                                                        )}
-                                                    </Box>
-                                                    {header.id !== 'actions' && <Group spacing="xs" noWrap>
-                                                        <ColumnSorter
-                                                            column={header.column}
-                                                        />
-                                                        <ColumnFilter
-                                                            column={header.column}
-                                                        />
-                                                    </Group>}
-                                                </Group>
-                                            )}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {getRowModel().rows.map((row) => {
-                            return (
-                                <tr key={row.id}>
-                                    {row.getVisibleCells().map((cell) => {
-                                        return (
-                                            <td key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext(),
-                                                )}
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
+                <Table>
+                    <TableHeader headerGroups={getHeaderGroups} />
+                    <TableBody rowModel={getRowModel} />
                 </Table>
                 <br />
                 <Pagination
