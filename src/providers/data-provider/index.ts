@@ -34,7 +34,12 @@ const dataProvider = (apiUrl: string): DataProvider => ({
             params.append(`filter[${index}][value]`, filter.value)
         })
 
-        return axiosInstance.get(backendUrl + resource, { params })
+        return axiosInstance.get(backendUrl + resource, { params }).then((res)=>{
+            return {
+                data: res.data,
+                total: res.headers['x-total-count']
+            }
+        })
     },
     create: (args) => simpleDataProvider.create(args),
     update: (arg) => simpleDataProvider.update(arg),

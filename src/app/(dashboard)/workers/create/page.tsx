@@ -1,11 +1,12 @@
 "use client"
 import { NumberInput, Select, SimpleGrid, TextInput, } from '@mantine/core';
 import { DatePicker } from "@mantine/dates";
-import { Create, useForm, useSelect } from '@refinedev/mantine';
+import { useCreateWorker } from '@modules/workers/infrastructure';
+import { useSelect } from '@refinedev/core';
+import { Create } from '@refinedev/mantine';
 
-import dayjs from 'dayjs';
 const CreateWorkerPage = () => {
-  const { selectProps } = useSelect({
+  const { onSearch, options } = useSelect({
     resource: "users",
     onSearch: (value) => [
       {
@@ -15,19 +16,14 @@ const CreateWorkerPage = () => {
       },
     ],
     optionValue(item) {
-      return "1"
+      return "" + item.id
     },
     optionLabel(item) {
       return item.firstName + " " + item.lastName
     },
-    debounce: 1000, //2 sec
+    debounce: 500, //2 sec
   });
-  const { getInputProps, values, saveButtonProps } = useForm({
-    transformValues(values) {
-      values['joinDate'] = dayjs(values?.joinDate).format("YYYY-MM-DD")
-      return values
-    },
-  })
+  const { getInputProps, values, saveButtonProps } = useCreateWorker()
 
   const user = values?.userId
 
@@ -42,11 +38,9 @@ const CreateWorkerPage = () => {
           <Select
             label="User"
             placeholder="Select an user"
+            data={options}
+            onSearchChange={onSearch}
             {...getInputProps("userId")}
-            {...selectProps}
-            // onChange={(e) => {
-            //   setValue("userId", e)
-            // }}
             withinPortal
             searchable
           />
@@ -67,13 +61,19 @@ const CreateWorkerPage = () => {
           />
         </div>
         <div>
-          <DatePicker label="Join Date" withinPortal inputFormat='YYYY-MM-DD' labelFormat='YYYY-MM-DD' {...getInputProps("joinDate")} />
+          <DatePicker
+            label="Join Date"
+            withinPortal
+            inputFormat='YYYY-MM-DD'
+            labelFormat='YYYY-MM-DD'
+            {...getInputProps("joinDate")} />
         </div>
         <div>
-          <NumberInput label="Daily Rate" {...getInputProps("dailyRate")} />
+          <NumberInput
+            label="Daily Rate"
+            {...getInputProps("dailyRate")} />
         </div>
       </SimpleGrid>
-
     </Create>
   )
 }
