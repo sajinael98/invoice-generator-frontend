@@ -55,6 +55,12 @@ export default function RootLayout({
                       list: '/customers',
                       create: '/customers/create',
                       edit: '/customers/edit/:id'
+                    },
+                    {
+                      name: 'missions',
+                      list: '/missions',
+                      create: '/missions/create',
+                      edit: '/missions/edit/:id'
                     }
                   ]}
                   options={{
