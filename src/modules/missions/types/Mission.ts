@@ -1,12 +1,7 @@
-export interface IMission {
+export interface MissionResponse {
     id: number;
     title: string;
-    description: string;
-    rate: number;
+    description?: string;
+    hourlyRate: number;
+    estimatedMins: number;
 }
-
-export interface MissionResponse extends IMission { }
-
-export interface CreateMissionRequest extends Omit<IMission, 'id'> { }
-
-export interface UpdateMissionRequest { }

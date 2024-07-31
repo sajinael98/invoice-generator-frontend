@@ -17,9 +17,14 @@ const MissionsListPage = () => {
             header: 'Title'
         },
         {
-            id: 'rate',
-            accessorKey: 'rate',
-            header: 'Rate'
+            id: 'hourlyRate',
+            accessorKey: 'hourlyRate',
+            header: 'Hourly Rate'
+        },
+        {
+            id: 'estimatedMins',
+            accessorKey: 'estimatedMins',
+            header: 'Estimated Mins'
         },
         {
             id: "actions",
