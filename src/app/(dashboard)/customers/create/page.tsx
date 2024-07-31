@@ -1,11 +1,11 @@
 "use client"
 
-import { CustomerFormProvider, useCreateCustomer } from '@modules/customers/infrastructure'
+import Create from '@components/Create'
+import { CustomerFormProvider, useCustomerForm } from '@modules/customers/infrastructure'
 import { CustomerForm } from '@modules/customers/presentation'
-import { Create } from '@refinedev/mantine'
 
 const CreateCustomerPage = () => {
-  const form = useCreateCustomer()
+  const form = useCustomerForm()
 
   return (
     <Create saveButtonProps={form.saveButtonProps}>

@@ -1,16 +1,11 @@
 "use client"
 
-import { CustomerFormProvider, useUpdateCustomer } from '@modules/customers/infrastructure'
+import Edit from '@components/Edit'
+import { CustomerFormProvider, useCustomerForm } from '@modules/customers/infrastructure'
 import { CustomerForm } from '@modules/customers/presentation'
-import { Edit } from '@refinedev/mantine'
-import { useEffect } from 'react'
 
 const UpdateCustomerPage = () => {
-  const form = useUpdateCustomer()
-  
-  useEffect(() => {
-    form.getInputProps('id')
-  }, [])
+  const form = useCustomerForm()
 
   return (
     <Edit saveButtonProps={form.saveButtonProps}>

@@ -8,16 +8,7 @@ const address: ZodString = z.string().min(1, { message: 'Required' })
 const email: ZodString = z.string().min(1, { message: 'Required' }).email("Invalid email")
 const phone: ZodString = z.string().regex(/^05\d{8}$/, { message: 'invalid phone' })
 
-export const createCustomerSchema = z.object({
-    firstName,
-    lastName,
-    email,
-    city,
-    address,
-    phone
-})
-
-export const updateCustomerSchema = z.object({
+export const customerSchema = z.object({
     firstName,
     lastName,
     email,
