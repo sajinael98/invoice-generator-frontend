@@ -1,8 +1,8 @@
 "use client"
 
+import Edit from '@components/Edit'
 import { MissionProvider, useMissionForm } from '@modules/missions/infrastructure'
 import { MissionForm } from '@modules/missions/presentation'
-import { Edit } from '@refinedev/mantine'
 
 const UpdateMissionPage = () => {
     const form = useMissionForm()

@@ -8,8 +8,11 @@ import React from 'react'
 import { useTable } from "@refinedev/react-table";
 import TableHeader from '@components/Table/TableHeader'
 import TableBody from '@components/Table/TableBody'
+import { useDocumentTitle } from '@mantine/hooks'
 
 const MissionsListPage = () => {
+    useDocumentTitle('missions')
+    
     const columns = React.useMemo<ColumnDef<MissionResponse>[]>(() => [
         {
             id: 'title',
@@ -47,7 +50,9 @@ const MissionsListPage = () => {
             },
         },
     ], [])
+
     const { getHeaderGroups, getRowModel } = useTable({ columns })
+
     return (
         <List>
             <Table>
