@@ -6,7 +6,6 @@ import { Create } from '@refinedev/mantine'
 
 const CreateInvoicePage = () => {
     const form = useInvoiceForm()
-
     return (
         <Create saveButtonProps={form.saveButtonProps}>
             <InvoiceProvider form={form as any}>

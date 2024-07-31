@@ -95,6 +95,7 @@ const InvoiceForm = () => {
                 />
                 <Input.Wrapper
                     label='Required Time'
+                    error={getInputProps('requiredTime').error}
                 >
                     <Input
                         type='time'

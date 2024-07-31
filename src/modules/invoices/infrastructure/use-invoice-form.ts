@@ -1,7 +1,13 @@
-import { createFormContext } from "@mantine/form";
+import { createFormContext, zodResolver } from "@mantine/form";
 import { useForm } from "@refinedev/mantine";
 import { formatDate, parseDate } from "@utils/date-utils";
 import { useCallback } from "react";
+import { invoiceSchema } from "./schema";
+
+function transformValues(values:any){
+    values.invoiceDate = formatDate(values.invoiceDate)
+    values.requiredDate = formatDate(values.requiredDate)
+}
 
 export function useInvoiceForm() {
     return useForm({
@@ -20,14 +26,12 @@ export function useInvoiceForm() {
         refineCoreProps: {
             createMutationOptions: {
                 onMutate({ values }) {
-                    values.invoiceDate = formatDate(values.invoiceDate)
-                    values.requiredDate = formatDate(values.requiredDate)
+                    transformValues(values)
                 },
             },
             updateMutationOptions: {
                 onMutate({ values }) {
-                    values.invoiceDate = formatDate(values.invoiceDate)
-                    values.requiredDate = formatDate(values.requiredDate)
+                    transformValues(values)
                 },
             },
             queryOptions: {
@@ -37,7 +41,9 @@ export function useInvoiceForm() {
                     return data
                 }, [])
             }
-        }
+        },
+        validate: zodResolver(invoiceSchema),
+
     })
 }
 export const [InvoiceProvider, useInvoiceFormContext] = createFormContext()

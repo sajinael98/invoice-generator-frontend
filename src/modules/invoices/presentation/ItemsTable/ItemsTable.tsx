@@ -125,6 +125,7 @@ const ItemsTable = () => {
             <Group position='apart' align='flex-end'>
                 <Text fw={500}>
                     Items
+                    <Text size='xs' c='red'>{error}</Text>
                 </Text>
                 <AddItemButton />
             </Group>
