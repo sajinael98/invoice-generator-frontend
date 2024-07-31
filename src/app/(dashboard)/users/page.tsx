@@ -88,8 +88,8 @@ const page = () => {
         <List>
             <Box style={{ overflowX: 'auto' }}>
                 <Table>
-                    <TableHeader headerGroups={getHeaderGroups} />
-                    <TableBody rowModel={getRowModel} />
+                    <TableHeader headerGroups={getHeaderGroups()} />
+                    <TableBody rows={getRowModel().rows} />
                 </Table>
                 <br />
                 <Pagination

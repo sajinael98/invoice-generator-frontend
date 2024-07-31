@@ -63,8 +63,8 @@ const CustomersListPage = () => {
     return (
         <List>
             <Table>
-                <TableHeader headerGroups={getHeaderGroups} />
-                <TableBody rowModel={getRowModel} />
+                <TableHeader headerGroups={getHeaderGroups()} />
+                <TableBody rows={getRowModel().rows} />
             </Table>
             <Pagination
                 position="right"

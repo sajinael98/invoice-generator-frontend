@@ -1,4 +1,4 @@
 export enum City {
-    RAMALLAH = 'Ramallah',
-    NABLUS = 'Nablus'
+    RAMALLAH = 'RAMALLAH',
+    NABLUS = 'NABLUS'
 }

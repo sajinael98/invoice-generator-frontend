@@ -10,8 +10,11 @@ const MissionForm = () => {
                 label='Title'
                 {...getInputProps('title')} />
             <NumberInput
-                label='Rate'
-                {...getInputProps('rate')} />
+                label='Hourly Rate'
+                {...getInputProps('hourlyRate')} />
+            <NumberInput
+                label='Estimated Mins'
+                {...getInputProps('estimatedMins')} />
             <Textarea
                 label='Description'
                 placeholder='Write the mission description'

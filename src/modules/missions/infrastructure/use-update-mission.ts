@@ -9,7 +9,8 @@ export function useUpdateMission() {
             id: undefined,
             title: undefined,
             description: undefined,
-            rate: undefined
+            hourlyRate: undefined,
+            estimatedMins: undefined
         },
         validate: zodResolver(updateMissionSchema)
     })

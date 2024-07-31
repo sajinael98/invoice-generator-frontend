@@ -8,7 +8,7 @@ import { ColumnFilter } from '../ColumnFilter'
 const TableHeader = ({ headerGroups }: TableHeaderProps) => {
     return (
         <thead>
-        {headerGroups().map((headerGroup) => (
+        {headerGroups.map((headerGroup) => (
             <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                     return (
@@ -41,4 +41,4 @@ const TableHeader = ({ headerGroups }: TableHeaderProps) => {
     )
 }
 
-export default TableHeader
+export default React.memo(TableHeader)
