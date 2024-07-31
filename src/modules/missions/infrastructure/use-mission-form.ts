@@ -5,11 +5,11 @@ import { missionSchema } from "./schema";
 export function useMissionForm() {
     return useForm({
         initialValues: {
-            id: 0,
-            title: '',
+            id: undefined,
+            title: undefined,
             hourlyRate: 0,
             estimatedMins: 0,
-            description: ''
+            description: undefined
         },
         validate: zodResolver(missionSchema)
     })
