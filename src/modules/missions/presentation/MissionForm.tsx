@@ -1,5 +1,4 @@
 import { NumberInput, SimpleGrid, TextInput, Textarea } from '@mantine/core'
-import React from 'react'
 import { useMissionFormContext } from '../infrastructure'
 
 const MissionForm = () => {

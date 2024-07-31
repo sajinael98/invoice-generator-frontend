@@ -1,11 +1,11 @@
 "use client"
 
-import { MissionProvider, useUpdateMission } from '@modules/missions/infrastructure'
+import { MissionProvider, useMissionForm } from '@modules/missions/infrastructure'
 import { MissionForm } from '@modules/missions/presentation'
 import { Edit } from '@refinedev/mantine'
 
 const UpdateMissionPage = () => {
-    const form = useUpdateMission()
+    const form = useMissionForm()
     return (
         <Edit saveButtonProps={form.saveButtonProps}>
             <MissionProvider form={form as any}>
