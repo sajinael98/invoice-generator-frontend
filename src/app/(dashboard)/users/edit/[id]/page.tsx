@@ -14,11 +14,11 @@ const EditUserPage = () => {
         if (queryResult?.isError) {
             redirect('list')
         }
-    }, [queryResult])
+    }, [queryResult, redirect])
 
     useEffect(() => {
         register('id')
-    }, [])
+    }, [register])
 
     //role field
     const { onChange: onRoleChange, ...roleProps } = register("role")

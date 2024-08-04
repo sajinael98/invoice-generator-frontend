@@ -50,11 +50,11 @@ const ItemsTable = () => {
         pageSize: 2,
     });
     const { getInputProps, removeListItem, insertListItem } = useInvoiceFormContext()
-    
+
     const items = getInputProps('items').value
     const error = getInputProps('items').error
     const paginatedData = useMemo(() => getPaginatedData(items, pagination.pageIndex, pagination.pageSize), [pagination.pageIndex, pagination.pageSize, items])
-    
+
     const columns = React.useMemo<ColumnDef<IItem>[]>(() => [
         {
             header: 'Mission',
@@ -71,7 +71,7 @@ const ItemsTable = () => {
         {
             header: 'Action',
             accessorKey: 'id',
-            cell({ row }) {
+            cell: ({ row }): React.ReactNode => {
                 const [opened, { open, close }] = useDisclosure(false)
                 const index = row.index + pagination.pageIndex * pagination.pageSize
 
@@ -83,7 +83,7 @@ const ItemsTable = () => {
                     removeListItem('items', index)
                     insertListItem('items', data, index)
                 }
-                
+
                 function removeHandler() {
                     removeListItem('items', index)
                 }
@@ -103,9 +103,9 @@ const ItemsTable = () => {
                         </ActionIcon>
                     </Group>
                 </>
-            },
+            }
         }
-    ], [pagination.pageIndex, pagination.pageSize, items])
+    ], [pagination.pageIndex, pagination.pageSize, items, insertListItem, removeListItem])
 
     const { getHeaderGroups, getRowModel } = useReactTable({
         data: paginatedData as any,

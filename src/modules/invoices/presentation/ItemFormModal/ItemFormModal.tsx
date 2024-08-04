@@ -61,7 +61,7 @@ const ItemFormModal = ({
                 estimatedMins: mission.estimatedMins
             })
         }
-    }, [mission])
+    }, [mission, setValues])
 
     return (
         <Modal

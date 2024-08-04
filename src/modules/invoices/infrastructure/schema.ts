@@ -4,12 +4,11 @@ import { z } from "zod";
 
 const item = {
     missionId: z.number().min(1),
-    rate: z.number().min(1),
-    note: z.string().min(1)
+    hourlyRate: z.number().min(1),
 }
 
 export const invoiceSchema = z.object({
-    customerId: z.string().min(1, 'required'),
+    customerId: z.number().min(1, 'required'),
     phone: z.string().min(1, { message: 'required' }),
     email: z.string().min(1, 'required'),
     invoiceDate: z.date({ message: 'required' }),

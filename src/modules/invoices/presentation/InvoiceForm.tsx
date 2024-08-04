@@ -8,7 +8,7 @@ import ItemsTable from './ItemsTable/ItemsTable'
 
 const InvoiceForm = () => {
     const { getInputProps, values, setValues } = useInvoiceFormContext()
-
+    
     const { selectProps, queryResult } = useSelect({
         resource: 'customers',
         optionLabel: (item: any) => `${item.firstName} ${item.lastName}`,
@@ -56,10 +56,12 @@ const InvoiceForm = () => {
         if (selectedCustomer) {
             setValues({
                 phone: selectedCustomer.phone,
-                email: selectedCustomer.email
+                email: selectedCustomer.email,
+                city: selectedCustomer.city,
+                address: selectedCustomer.address
             })
         }
-    }, [selectedCustomer])
+    }, [selectedCustomer, setValues])
 
     return (
         <>
@@ -105,6 +107,10 @@ const InvoiceForm = () => {
                     label='City'
                     data={cities}
                     {...getInputProps('city')}
+                />
+                 <TextInput
+                    label='Address'
+                    {...getInputProps('address')}
                 />
             </SimpleGrid>
             <ItemsTable />

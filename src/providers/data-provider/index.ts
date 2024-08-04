@@ -14,6 +14,7 @@ axiosInstance.interceptors.request.use(async function (config) {
 
     return config
 })
+export const api = axiosInstance
 
 const backendUrl = "/backend-api/";
 const simpleDataProvider = dataProviderSimpleRest(backendUrl, axiosInstance)
@@ -34,7 +35,7 @@ const dataProvider = (apiUrl: string): DataProvider => ({
             params.append(`filter[${index}][value]`, filter.value)
         })
 
-        return axiosInstance.get(backendUrl + resource, { params }).then((res)=>{
+        return axiosInstance.get(backendUrl + resource, { params }).then((res) => {
             return {
                 data: res.data,
                 total: res.headers['x-total-count']

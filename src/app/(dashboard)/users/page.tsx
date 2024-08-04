@@ -9,7 +9,7 @@ import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
-const page = () => {
+const EditUserPage = () => {
     const columns = useMemo<ColumnDef<IUser>[]>(() => [
         // {
         //     id: 'id',
@@ -103,4 +103,4 @@ const page = () => {
     )
 }
 
-export default page
+export default EditUserPage
