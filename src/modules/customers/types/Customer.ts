@@ -9,12 +9,3 @@ export interface ICustomer {
     email: string;
     phone: string;
 }
-
-export interface CustomerResponse extends ICustomer {
-}
-
-export interface CreateCustomerRequest extends Omit<ICustomer, 'id'> {
-}
-
-export interface UpdateCustomerRequest {
-}

@@ -5,13 +5,13 @@ import { customerSchema } from "./schema";
 export function useCustomerForm() {
     return useForm({
         initialValues: {
-            id: undefined,
-            firstName: undefined,
-            lastName: undefined,
-            city: undefined,
-            address: undefined,
-            phone: undefined,
-            email: undefined
+            id: "",
+            firstName: "",
+            lastName: "",
+            city: "",
+            address: "",
+            phone: "",
+            email: ""
         },
         validate: zodResolver(customerSchema)
     })
