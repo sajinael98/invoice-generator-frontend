@@ -2,5 +2,6 @@ export enum Status {
     PENDING = 'PENDING',
     CONFIRMED = 'CONFIRMED',
     STARTED = 'STARTED',
+    IN_PROCESS = 'IN_PROCESS',
     COMPLETED = 'COMPLETED'
 }

@@ -67,7 +67,8 @@ export default function RootLayout({
                       list: '/invoices',
                       create: '/invoices/create',
                       edit: '/invoices/edit/:id',
-                    }
+                      show: '/invoices/:id/tasks'
+                    },
                   ]}
                   options={{
                     syncWithLocation: true,

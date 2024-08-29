@@ -1,20 +1,21 @@
 "use client"
 
-import { Button, Notification } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { InvoiceProvider, useInvoiceForm } from '@modules/invoices/infrastructure'
 import { InvoiceForm } from '@modules/invoices/presentation'
 import { Status } from '@modules/invoices/types'
 import { api } from '@providers/data-provider'
-import { useNotification } from '@refinedev/core'
+import { useNavigation, useNotification, useResourceParams } from '@refinedev/core'
 import { Edit } from '@refinedev/mantine'
-import { useIsMutating, useMutation } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useMutation } from '@tanstack/react-query'
 
 const UpdateInvoicePage = () => {
     const { open } = useNotification()
+    const { id: invoiceId } = useResourceParams()
+    const { push } = useNavigation()
     const form = useInvoiceForm()
     const status = form.values.status;
-    const { isLoading, mutate } = useMutation({
+    const { isLoading: isConfirming, mutate: confirm } = useMutation({
         mutationFn: (id: any) => api.patch(`/backend-api/invoices/${id}/submit`),
         onSuccess(data, variables, context) {
             open && open({
@@ -22,13 +23,29 @@ const UpdateInvoicePage = () => {
                 message: 'Invoice has been submitted successfuly',
             })
             form.refineCore.queryResult?.refetch()
-
         },
     })
 
+    const { isLoading: isStarting, mutate: start } = useMutation({
+        mutationFn: (id: any) => api.patch(`/backend-api/invoices/${id}/start`),
+        onSuccess(data, variables, context) {
+            push(`/invoices/${invoiceId}/tasks`)
+        },
+
+    })
+
     function confirmHandler() {
-        mutate(form.values.id)
+        confirm(invoiceId)
     }
+
+    function startHandler() {
+        start(invoiceId)
+    }
+
+    function continueHandler() {
+        push(`/invoices/${invoiceId}/tasks`)
+    }
+
     const footerButtonProps = status === Status.CONFIRMED ? {
         display: 'none'
     } : undefined
@@ -50,9 +67,22 @@ const UpdateInvoicePage = () => {
                     {status === Status.PENDING && <Button
                         size='sm'
                         onClick={confirmHandler}
-                        loading={isLoading}
+                        loading={isConfirming}
                     >
                         Confirm
+                    </Button>}
+                    {status === Status.CONFIRMED && <Button
+                        size='sm'
+                        onClick={startHandler}
+                        loading={isStarting}
+                    >
+                        Start
+                    </Button>}
+                    {[Status.STARTED, Status.IN_PROCESS].includes(status as any) && <Button
+                        size='sm'
+                        onClick={continueHandler}
+                    >
+                        Contiune
                     </Button>}
 
                 </>
