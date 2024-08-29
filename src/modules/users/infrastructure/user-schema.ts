@@ -1,24 +1,20 @@
-import { ZodString, z } from 'zod';
-import { IRole } from '../types';
+import { z } from 'zod';
+import { UserRole } from '../types';
 
-const firstName: ZodString = z.string().min(1, { message: 'Required' })
-const lastName: ZodString = z.string().min(1, { message: 'Required' })
-const email: ZodString = z.string().min(1, { message: 'Required' }).email("Invalid email")
-const role = z.enum([IRole.ADMIN, IRole.USER, IRole.MANAGER])
-const password: ZodString = z.string().min(6, { message: 'Required' })
-
-export const createUserSchema = z.object({
-    firstName,
-    lastName,
-    email,
-    password,
-    role
-});
-
-export const updateUserSchema = z.object({
-    id: z.number(),
-    firstName,
-    lastName,
-    email,
-    role
-});
+export const userSchema = z.object({
+    id: z.number().optional(),
+    firstName: z.string().min(1, { message: 'Required' }),
+    lastName: z.string().min(1, { message: 'Required' }),
+    email: z.string().min(1, { message: 'Required' }).email("Invalid email"),
+    role: z.enum([UserRole.ADMIN, UserRole.SUPERVISIOR, UserRole.WORKER]),
+    password: z.string().optional()
+}).refine((data) => {
+    const { id, password } = data
+    if (id) {
+        return true
+    }
+    if (password !== undefined && (password as string).length < 6) {
+        return false
+    }
+    return true
+}, { path: ['password'], message: 'password is required' })

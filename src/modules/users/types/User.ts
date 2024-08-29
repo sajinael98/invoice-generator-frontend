@@ -1,16 +1,9 @@
-import { IRole } from "./Role"
+import { UserRole } from "./UserRole"
 
 export interface IUser {
     id: string
     firstName: string;
     lastName: string;
     email: string;
-    role: IRole;
+    role: UserRole;
 }
-
-export interface ICreateUserRequest extends Omit<IUser, 'id'> {
-    password: string
-}
-
-export interface IUpdateUserRequest extends IUser {}
-
