@@ -1,11 +1,12 @@
 "use client"
 
-import { WorkerFormProvider, useUpdateWorker } from '@modules/workers/infrastructure'
+import Edit from '@components/Edit'
+import { WorkerFormProvider, useWorkerForm } from '@modules/workers/infrastructure'
 import { WorkerForm } from '@modules/workers/presentation'
-import { Edit } from '@refinedev/mantine'
+import React from 'react'
 
-const EditWorkerPage = () => {
-    const form = useUpdateWorker()
+const page = () => {
+    const form = useWorkerForm()
     
     return (
         <Edit saveButtonProps={form.saveButtonProps}>
@@ -16,4 +17,4 @@ const EditWorkerPage = () => {
     )
 }
 
-export default EditWorkerPage
+export default page
