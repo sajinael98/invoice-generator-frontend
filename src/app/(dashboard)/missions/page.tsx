@@ -1,7 +1,7 @@
 "use client"
 
 import { Table } from '@mantine/core'
-import { MissionResponse } from '@modules/missions/types'
+import { IMission } from '@modules/missions/types'
 import { DeleteButton, EditButton, List } from '@refinedev/mantine'
 import { ColumnDef } from '@tanstack/react-table'
 import React from 'react'
@@ -13,7 +13,7 @@ import { useDocumentTitle } from '@mantine/hooks'
 const MissionsListPage = () => {
     useDocumentTitle('missions')
     
-    const columns = React.useMemo<ColumnDef<MissionResponse>[]>(() => [
+    const columns = React.useMemo<ColumnDef<IMission>[]>(() => [
         {
             id: 'title',
             accessorKey: 'title',

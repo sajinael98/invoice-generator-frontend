@@ -6,6 +6,7 @@ import { MissionForm } from '@modules/missions/presentation'
 
 const UpdateMissionPage = () => {
     const form = useMissionForm()
+    
     return (
         <Edit saveButtonProps={form.saveButtonProps}>
             <MissionProvider form={form as any}>
