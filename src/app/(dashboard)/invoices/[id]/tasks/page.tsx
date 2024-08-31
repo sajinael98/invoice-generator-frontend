@@ -84,7 +84,7 @@ const TasksPage = () => {
 
             </Paper>
 
-            <Group position='right'>
+            <Group position='right' mb='md'>
                 <Select value={selectedStatus} onChange={setSelectedStatus} data={['All', 'PENDING', 'ACTIVE', 'PAUSESD', 'COMPLETED']} />
                 <Button>
                     Start All

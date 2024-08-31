@@ -5,7 +5,7 @@ import { useAssignTaskWorker, useDoneTask, useStartTask, useStopTask } from '@mo
 import { ITask, TaskStatus } from '@modules/tasks/types'
 import { useGetWorkersWithoutTasks } from '@modules/workers/infrastructure'
 import { WorkerResponseDto } from '@modules/workers/types'
-import { useResourceParams } from '@refinedev/core'
+import { useList, useMany, useResourceParams } from '@refinedev/core'
 import { IconCheck } from '@tabler/icons-react'
 import { useEffect, useRef, useState } from 'react'
 
@@ -20,7 +20,12 @@ const TaskCard = ({ task }: TaskCardProps) => {
     const timerRef = useRef<any>()
     const [isAllowedFetchingWorkers, { open: allowFetchingWorkers, close: preventFetchingWorkers }] = useDisclosure(false)
     const [running, { open: startRunning, close: stopRunning }] = useDisclosure(task.status === TaskStatus.ACTIVE)
-    const { isFetching: isWorkersFetching, data } = useGetWorkersWithoutTasks({ enabled: !workerValue && isAllowedFetchingWorkers })
+    const { isFetching: isWorkersFetching, data } = useList({
+        resource: 'workers',
+        queryOptions: {
+            enabled: !workerValue && isAllowedFetchingWorkers
+        }
+    })
     const { mutate: assignWorker } = useAssignTaskWorker({
         taskId: task.id,
         invoiceId: invoiceId as number

@@ -4,11 +4,6 @@ import { formatDate, parseDate } from "@utils/date-utils";
 import { useCallback } from "react";
 import { invoiceSchema } from "./schema";
 
-function transformValues(values: any) {
-    values.invoiceDate = formatDate(values.invoiceDate)
-    values.requiredDate = formatDate(values.requiredDate)
-}
-
 export function useInvoiceForm() {
     return useForm({
         initialValues: {
@@ -24,27 +19,13 @@ export function useInvoiceForm() {
             status: undefined,
             items: []
         },
+        transformValues: useCallback((data: any) => ({ ...data, invoiceDate: formatDate(data.invoiceDate), requiredDate: formatDate(data.requiredDate) }), []),
         refineCoreProps: {
-            createMutationOptions: {
-                onMutate({ values }) {
-                    transformValues(values)
-                },
-            },
-            updateMutationOptions: {
-                onMutate({ values }: any) {
-                    transformValues(values)
-                },
-            } as any,
             queryOptions: {
-                select: useCallback((data: any) => {
-                    data.data.invoiceDate = parseDate(data.data.invoiceDate)
-                    data.data.requiredDate = parseDate(data.data.requiredDate)
-                    return data
-                }, [])
+                select: useCallback((data: any) => ({ ...data, data: { ...data.data, invoiceDate: parseDate(data.data.invoiceDate), requiredDate: parseDate(data.data.requiredDate) } }), [])
             }
         },
         validate: zodResolver(invoiceSchema),
-
     })
 }
 export const [InvoiceProvider, useInvoiceFormContext] = createFormContext()
